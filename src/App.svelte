@@ -5,6 +5,7 @@
 	let snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
 	let direction = "NORTH"
 	let foodSpot = randomFoodSpot(gridSize, snake)
+	let hasEaten = false
 	setInterval(() => {
 		let [headRow, headCol] = snake[0]
 		let newHead;
@@ -22,7 +23,15 @@
 				newHead = [(headRow - 1 < 0) ? gridSize - 1 : headRow - 1, headCol]
 				break;
 		}
-		snake = [newHead, ...snake.slice(0, snake.length -1)]
+
+		if (newHead[0] === foodSpot[0] && newHead[1] === foodSpot[1]) {
+			hasEaten = true
+		}
+		snake = [newHead, ...snake.slice(0, hasEaten ? snake.length : snake.length -1)]
+		if (hasEaten) {
+			foodSpot = randomFoodSpot(gridSize, snake)
+		}
+		hasEaten = false
 	}, 500)
 	let rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
