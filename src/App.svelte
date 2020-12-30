@@ -4,6 +4,7 @@
 
 	let snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
 	let direction = "NORTH"
+	let foodSpot = randomFoodSpot(gridSize, snake)
 	setInterval(() => {
 		let [headRow, headCol] = snake[0]
 		let newHead;
@@ -22,8 +23,6 @@
 				break;
 		}
 		snake = [newHead, ...snake.slice(0, snake.length -1)]
-
-
 	}, 500)
 	let rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
@@ -44,12 +43,22 @@
 				break;
 		}
 	}
+
+	function randomFoodSpot(gridSize, snake) {
+		let randomRow = Math.floor(Math.random() * gridSize)
+		let randomCol = Math.floor(Math.random() * gridSize)
+		if (snake.some(([row, col]) => row === randomRow && col === randomCol)) {
+			return randomFoodSpot(gridSize, snake)
+		} else {
+			return [randomRow, randomRow]
+		}
+	}
 </script>
 
 <main>
 	<div class="grid">
 		{#each rows as rowIndex}
-			<Row {rowIndex} {snake}/>
+			<Row {rowIndex} {snake} {foodSpot}/>
 		{/each}
 	</div>
 </main>
