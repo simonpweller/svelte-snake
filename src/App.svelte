@@ -1,9 +1,11 @@
 <script>
+	import SwipeListener from 'swipe-listener';
 	import Row from './Row.svelte';
+
 	const gridSize = 20
 
 	let snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
-	let direction = 'WEST'
+	let direction = 'LEFT'
 	let foodSpot = randomFoodSpot(gridSize, snake)
 
 	let interval = 500;
@@ -14,16 +16,16 @@
 		let [headRow, headCol] = snake[0]
 		let newHead;
 		switch (direction) {
-			case 'EAST':
+			case 'RIGHT':
 				newHead = [headRow, (headCol + 1 === gridSize) ? 0 : headCol + 1]
 				break;
-			case 'SOUTH':
+			case 'DOWN':
 				newHead = [(headRow + 1 === gridSize) ? 0 : headRow + 1, headCol]
 				break;
-			case 'WEST':
+			case 'LEFT':
 				newHead = [headRow, (headCol - 1 < 0) ? gridSize - 1 : headCol - 1]
 				break;
-			case 'NORTH':
+			case 'UP':
 				newHead = [(headRow - 1 < 0) ? gridSize - 1 : headRow - 1, headCol]
 				break;
 		}
@@ -47,19 +49,34 @@
 		const keyCode = event.keyCode
 		switch (keyCode) {
 			case 37:
-				direction = 'WEST'
+				direction = 'LEFT'
 				break;
 			case 38:
-				direction = 'NORTH'
+				direction = 'UP'
 				break;
 			case 39:
-				direction = 'EAST'
+				direction = 'RIGHT'
 				break;
 			case 40:
-				direction = 'SOUTH'
+				direction = 'DOWN'
 				break;
 		}
 	}
+
+	function handleSwipe(event) {
+		const directions = event.detail.directions
+		if (directions.top) {
+			direction = 'UP'
+		} else if (directions.bottom) {
+			direction = 'DOWN'
+		} else if (directions.left) {
+			direction = 'LEFT'
+		} else if (directions.right) {
+			direction = 'RIGHT'
+		}
+	}
+
+	SwipeListener(window)
 
 	function randomFoodSpot(gridSize, snake) {
 		let randomRow = Math.floor(Math.random() * gridSize)
@@ -80,7 +97,7 @@
 	</div>
 </main>
 
-<svelte:window on:keydown={handleKeydown}/>
+<svelte:window on:keydown={handleKeydown} on:swipe={handleSwipe}/>
 
 <style>
 	main {
