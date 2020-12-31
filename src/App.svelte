@@ -3,7 +3,7 @@
 	const gridSize = 20
 
 	let snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
-	let direction = "NORTH"
+	let direction = 'WEST'
 	let foodSpot = randomFoodSpot(gridSize, snake)
 
 	let interval = 500;
@@ -47,16 +47,16 @@
 		const keyCode = event.keyCode
 		switch (keyCode) {
 			case 37:
-				direction = "WEST"
+				direction = 'WEST'
 				break;
 			case 38:
-				direction = "NORTH"
+				direction = 'NORTH'
 				break;
 			case 39:
-				direction = "EAST"
+				direction = 'EAST'
 				break;
 			case 40:
-				direction = "SOUTH"
+				direction = 'SOUTH'
 				break;
 		}
 	}
