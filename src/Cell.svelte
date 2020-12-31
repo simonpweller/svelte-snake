@@ -12,8 +12,8 @@
 
 <style>
     div {
-        height: 30px;
-        width: 30px;
+        height: min(min(30px, 5vh), 5vw);
+        width: min(min(30px, 5vh), 5vw);
     }
 
     .isSnake {
