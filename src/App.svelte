@@ -34,6 +34,7 @@
 		snake = [newHead, ...snake.slice(0, hasEaten ? snake.length : snake.length - 1)]
 		if (hasEaten) {
 			foodSpot = randomFoodSpot(gridSize, snake)
+			console.log(foodSpot)
 			clearInterval(ticker)
 			interval /= 1.1
 			ticker = setInterval(tick, interval)
@@ -66,7 +67,7 @@
 		if (snake.some(([row, col]) => row === randomRow && col === randomCol)) {
 			return randomFoodSpot(gridSize, snake)
 		} else {
-			return [randomRow, randomRow]
+			return [randomRow, randomCol]
 		}
 	}
 </script>
