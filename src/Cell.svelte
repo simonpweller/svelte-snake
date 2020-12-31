@@ -22,7 +22,7 @@
     }
 
     .isFoodSpot {
-        background-color: lightpink;
+        background-image: url("/mouse-svgrepo-com.svg");
         border-radius: 15%;
     }
 </style>
