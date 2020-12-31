@@ -5,11 +5,15 @@
 	let snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
 	let direction = "NORTH"
 	let foodSpot = randomFoodSpot(gridSize, snake)
-	let hasEaten = false
-	setInterval(() => {
+
+	let interval = 500;
+	let ticker = setInterval(tick, interval)
+
+	function tick() {
+		let hasEaten = false
 		let [headRow, headCol] = snake[0]
 		let newHead;
-		switch(direction) {
+		switch (direction) {
 			case 'EAST':
 				newHead = [headRow, (headCol + 1 === gridSize) ? 0 : headCol + 1]
 				break;
@@ -17,7 +21,7 @@
 				newHead = [(headRow + 1 === gridSize) ? 0 : headRow + 1, headCol]
 				break;
 			case 'WEST':
-				newHead = [headRow, (headCol - 1 < 0) ? gridSize -1 : headCol - 1]
+				newHead = [headRow, (headCol - 1 < 0) ? gridSize - 1 : headCol - 1]
 				break;
 			case 'NORTH':
 				newHead = [(headRow - 1 < 0) ? gridSize - 1 : headRow - 1, headCol]
@@ -27,12 +31,15 @@
 		if (newHead[0] === foodSpot[0] && newHead[1] === foodSpot[1]) {
 			hasEaten = true
 		}
-		snake = [newHead, ...snake.slice(0, hasEaten ? snake.length : snake.length -1)]
+		snake = [newHead, ...snake.slice(0, hasEaten ? snake.length : snake.length - 1)]
 		if (hasEaten) {
 			foodSpot = randomFoodSpot(gridSize, snake)
+			clearInterval(ticker)
+			interval /= 1.1
+			ticker = setInterval(tick, interval)
 		}
-		hasEaten = false
-	}, 500)
+	}
+
 	let rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
 	function handleKeydown(event) {
@@ -76,9 +83,14 @@
 
 <style>
 	main {
+		background-color: #ddd;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
+	}
+
+	.grid {
+		background-color: #fff;
 	}
 </style>

@@ -14,15 +14,15 @@
     div {
         height: 30px;
         width: 30px;
-        background-color: #dddddd;
-        border: 1px solid #666666;
     }
 
     .isSnake {
-        background-color: chartreuse;
+        background-color: #1f3b06;
+        border-radius: 15%;
     }
 
     .isFoodSpot {
         background-color: lightpink;
+        border-radius: 15%;
     }
 </style>
