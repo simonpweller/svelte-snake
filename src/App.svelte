@@ -1,6 +1,5 @@
 <script>
 	import SwipeListener from 'swipe-listener';
-	import Row from './Row.svelte';
 	import Cell from './Cell.svelte';
 
 	const gridSize = 20
@@ -94,14 +93,17 @@
 </script>
 
 <main>
-	<div class="grid">
-		{#each rows as rowIndex}
-			<div class="row">
-			{#each cols as colIndex}
-				<Cell {rowIndex} {colIndex} {snake} {foodSpot}/>
+	<div class="wrapper">
+		<div class="scores">Score: {score}</div>
+		<div class="grid">
+			{#each rows as rowIndex}
+				<div class="row">
+				{#each cols as colIndex}
+					<Cell {rowIndex} {colIndex} {snake} {foodSpot}/>
+				{/each}
+				</div>
 			{/each}
-			</div>
-		{/each}
+		</div>
 	</div>
 </main>
 
@@ -114,6 +116,17 @@
 		justify-content: center;
 		align-items: center;
 		height: 100%;
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+	}
+
+	.scores {
+		font-weight: bold;
+		padding: 10px 0;
 	}
 
 	.grid {
