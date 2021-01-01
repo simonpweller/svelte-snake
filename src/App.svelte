@@ -13,27 +13,46 @@
 	let interval = 500;
 	let ticker = setInterval(tick, interval)
 
+	function reset() {
+		score = 0
+		snake = [[10, 10], [10, 11], [10, 12], [10, 13]]
+		direction = 'LEFT'
+		foodSpot = randomFoodSpot(gridSize, snake)
+		clearInterval(ticker)
+		interval = 500;
+		ticker = setInterval(tick, interval)
+	}
+
 	function tick() {
 		let hasEaten = false
 		let [headRow, headCol] = snake[0]
 		let newHead;
 		switch (direction) {
 			case 'RIGHT':
-				newHead = [headRow, (headCol + 1 === gridSize) ? 0 : headCol + 1]
+				newHead = [headRow, headCol + 1]
 				break;
 			case 'DOWN':
-				newHead = [(headRow + 1 === gridSize) ? 0 : headRow + 1, headCol]
+				newHead = [headRow + 1, headCol]
 				break;
 			case 'LEFT':
-				newHead = [headRow, (headCol - 1 < 0) ? gridSize - 1 : headCol - 1]
+				newHead = [headRow, headCol - 1]
 				break;
 			case 'UP':
-				newHead = [(headRow - 1 < 0) ? gridSize - 1 : headRow - 1, headCol]
+				newHead = [headRow - 1, headCol]
 				break;
 		}
 
 		if (newHead[0] === foodSpot[0] && newHead[1] === foodSpot[1]) {
 			hasEaten = true
+		} else if (
+			newHead[0] < 0 ||
+			newHead[0] === rows.length ||
+			newHead[1] < 0 ||
+			newHead[1] === cols.length ||
+			snake.some(piece => piece[0] === newHead[0] && piece[1] === newHead[1])
+		) {
+			reset();
+			return
 		}
 		snake = [newHead, ...snake.slice(0, hasEaten ? snake.length : snake.length - 1)]
 		if (hasEaten) {
